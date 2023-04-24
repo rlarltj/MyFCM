@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 	@Id
@@ -32,4 +31,12 @@ public class User {
 
 	@OneToMany(mappedBy = "writer")
 	private List<Post> posts = new ArrayList<>();
+
+	public User(Long id) {
+		this.id = id;
+	}
+
+	public User(String name) {
+		this.name = name;
+	}
 }

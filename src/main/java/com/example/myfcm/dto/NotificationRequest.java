@@ -1,24 +1,16 @@
 package com.example.myfcm.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class NotificationRequest {
 
+	private String targetToken;
 	private String title;
-	private String message;
-	private String token;
-
-	@Builder
-	public NotificationRequest(String title, String message, String token) {
-		this.title = title;
-		this.message = message;
-		this.token = token;
-	}
+	private String body;
 
 }

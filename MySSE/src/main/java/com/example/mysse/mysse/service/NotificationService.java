@@ -58,17 +58,6 @@ public class NotificationService {
 		}
 	}
 
-	private boolean hasLostData(String lastEventId) {
-		return !lastEventId.isEmpty();
-	}
-
-	private void sendLostData(String lastEventId, Long memberId, String emitterId, SseEmitter emitter) {
-		Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithId(String.valueOf(memberId));
-		eventCaches.entrySet().stream()
-			.filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
-			.forEach(entry -> sendNotification(emitter, entry.getKey(), emitterId, entry.getValue()));
-	}
-
 	public void send(User receiver, String content) {
 		Notification notification = notificationRepository.save(createNotification(receiver, content));
 
@@ -83,6 +72,17 @@ public class NotificationService {
 				sendNotification(emitter, eventId, key, new NotificationResponseDto(notification.getContent()));
 			}
 		);
+	}
+
+	private boolean hasLostData(String lastEventId) {
+		return !lastEventId.isEmpty();
+	}
+
+	private void sendLostData(String lastEventId, Long memberId, String emitterId, SseEmitter emitter) {
+		Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithId(String.valueOf(memberId));
+		eventCaches.entrySet().stream()
+			.filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
+			.forEach(entry -> sendNotification(emitter, entry.getKey(), emitterId, entry.getValue()));
 	}
 
 	private Notification createNotification(User receiver, String content) {

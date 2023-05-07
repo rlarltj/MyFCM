@@ -3,6 +3,8 @@ package com.example.mysse.mysse.domain;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,10 +42,21 @@ public class Notification {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User receiver;
 
+	@Enumerated(EnumType.STRING)
+	private NotificationType type;
+
 	public Notification(String content, Boolean isRead, User receiver) {
 		this.content = new NotificationContent(content);
 		this.isRead = isRead;
 		this.receiver = receiver;
+	}
+
+	public Notification(NotificationContent content, Boolean isRead, User receiver,
+		NotificationType type) {
+		this.content = content;
+		this.isRead = isRead;
+		this.receiver = receiver;
+		this.type = type;
 	}
 
 	public String getContent() {

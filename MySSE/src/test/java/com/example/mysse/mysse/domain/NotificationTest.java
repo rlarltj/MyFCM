@@ -33,4 +33,18 @@ class NotificationTest {
 		//when, then
 		Assertions.assertDoesNotThrow(() -> new NotificationContent("hihi"));
 	}
+
+	@Test
+	@DisplayName("Type 정보를 가진 알림이 성공적으로 생성된다.")
+	public void test4() throws Exception {
+		//given
+		NotificationContent content = new NotificationContent("content");
+		User user = new User("user");
+
+		//when, then
+
+		Assertions.assertDoesNotThrow(() -> new Notification(content, false, user, NotificationType.CONNECT));
+		Assertions.assertDoesNotThrow(() -> new Notification(content, false, user, NotificationType.APPROVE));
+		Assertions.assertDoesNotThrow(() -> new Notification(content, false, user, NotificationType.REJECT));
+	}
 }
